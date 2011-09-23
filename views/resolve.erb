@@ -1,0 +1,14 @@
+<form action="<%= url('/resolve') %>" method="POST">
+	<label for="query">Name to resolve</label>
+	<input type="text" id="query" name="query" value="<%= h @query %>" />
+	<input type="submit" value="resolve" />
+	
+	<label for="nameserver">DNS server (optional):</label>
+	<input type="text" id="nameserver" name="nameserver" value="<%= h @nameserver %>" />
+</form>
+
+<br /><br />
+
+<pre>
+<%= @result %>
+</pre>
