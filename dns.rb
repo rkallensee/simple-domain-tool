@@ -8,10 +8,12 @@
 
 require 'rubygems'
 require 'sinatra'
+require 'bundler'
 require 'dnsruby'
+require 'erb'
 
-require 'environment'
-require './helpers/sinatra'
+require_relative 'environment'
+require_relative './helpers/sinatra'
 
 get '/' do
   @query = @result = nil
