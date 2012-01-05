@@ -1,6 +1,7 @@
 # dns.rb
 # start with "ruby -rubygems dns.rb"
-# start with >> shotgun hello.rb << to reload after each request, or with >> rackup << via Bundler!
+# start with >> shotgun hello.rb << to reload after each request, or with >> rackup << via Bundler
+# or with plain rackup (config.ru) or with foreman start (uses Procfile).
 
 # links:
 # http://www.sinatrarb.com/intro.html

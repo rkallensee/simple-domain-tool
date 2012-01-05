@@ -1,8 +1,8 @@
-#require 'rubygems'
-#require 'bundler'
-#require 'sinatra'
-#require 'dnsruby'
-#require 'erb'
+require 'rubygems'
+require 'bundler'
+require 'sinatra'
+require 'dnsruby'
+require 'erb'
 
 require 'sinatra' unless defined?(Sinatra)
 
