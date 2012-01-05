@@ -9,8 +9,10 @@
 require 'rubygems'
 require 'sinatra'
 require 'bundler'
-require 'dnsruby'
 require 'erb'
+require 'dnsruby'
+# monkey-patch dnsruby which is broken on Heroku:
+module Dnsruby; class SelectThread;     def get_socket_pair; srv = nil; srv = TCPServer.new('::1', 0); rsock = TCPSocket.new(srv.addr[3], srv.addr[1]); lsock = srv.accept; srv.close; return [lsock, rsock]; end; end; end
 
 require_relative 'environment'
 require_relative './helpers/sinatra'
