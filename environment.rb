@@ -1,6 +1,7 @@
 require 'rubygems'
-require 'sinatra'
 require 'bundler'
+Bundler.require
+require 'sinatra'
 require 'erb'
 require 'dnsruby'
 require 'whois'
