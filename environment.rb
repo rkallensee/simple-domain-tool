@@ -6,7 +6,7 @@ require 'erb'
 
 require 'sinatra' unless defined?(Sinatra)
 
-enable :sessions
+#enable :sessions
 
 configure do
   SiteConfig = OpenStruct.new(
