@@ -1,2 +1,1 @@
-#web: bundle exec ruby dns.rb -p $PORT
-web: rackup
+web: bundle exec rackup -p $PORT
