@@ -1,14 +1,36 @@
 <form action="<%= url('/resolve') %>" method="POST">
-	<label for="query">Name to resolve</label>
-	<input type="text" id="query" name="query" value="<%= h @query %>" />
-	<input type="submit" value="resolve" />
-	
-	<label for="nameserver">DNS server (optional):</label>
-	<input type="text" id="nameserver" name="nameserver" value="<%= h @nameserver %>" />
+  <div class="clearfix">
+	<label for="query"><strong>Name/IP to resolve</strong>:</label>
+	<div class="input">
+	  <input type="text" id="query" name="query" value="<%= h @query %>">
+	</div>
+  </div><!-- /clearfix -->
+  <div class="clearfix">
+	<label for="nameserver">DNS server <span class="label notice">optional</span>:</label>
+	<div class="input">
+	  <input type="text" id="nameserver" name="nameserver" value="<%= h @nameserver %>">
+	</div>
+  </div><!-- /clearfix -->
+  <div class="actions">
+    <input type="submit" class="btn primary" value="Resolve!">
+	<a href="/" class="btn">Reset</a>
+  </div>
 </form>
 
-<br /><br />
-
-<pre>
-<%= @result %>
-</pre>
+<div class="results">
+  <div class="row">
+    <% unless @dns.nil? %>
+      <div class="span10">
+        <h2>DNS results</h2>
+        <pre><%= @dns %></pre>
+      </div>
+    <% end %>
+    <% unless @whois.nil? %>
+      <div class="span10">
+        <h2>WHOIS results</h2>
+        <pre><%= @whois %></pre>
+      </div>
+    <% end %>
+	</div>
+  </div>
+</div>

@@ -11,7 +11,10 @@ helpers do
     if session[:flash]
       tmp = session[:flash]
       session[:flash] = false
-      "<fieldset><legend>Notice</legend><p>#{tmp}</p></fieldset>"
+	  "<div class=\"alert-message error\">
+        <a class=\"close\" href=\"#\">&times;</a>
+        <p><strong>#{tmp}</p>
+      </div>"
     end
   end
 end

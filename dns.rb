@@ -7,32 +7,14 @@
 # http://www.sinatrarb.com/intro.html
 # http://www.sinatrarb.com/2011/03/03/sinatra-1.2.0.html
 
-require 'rubygems'
-require 'sinatra'
-require 'bundler'
-require 'erb'
-require 'dnsruby'
-
-# monkey-patch dnsruby which is broken on Heroku:
-module Dnsruby
-	class SelectThread
-		def get_socket_pair
-			srv = nil
-			srv = TCPServer.new('::1', 0)
-			rsock = TCPSocket.new(srv.addr[3], srv.addr[1])
-			lsock = srv.accept
-			srv.close
-			return [lsock, rsock]
-		end
-	end
-end
-
 require_relative 'environment'
 require_relative './helpers/sinatra'
 
+set :public_folder, File.dirname(__FILE__) + '/static'
+
 get '/' do
-  @query = @result = nil
-  @nameserver = "8.8.8.8"
+  @query = @dns = @whois = nil
+  @nameserver = "8.8.8.8" # Google
   erb :resolve
 end
 
@@ -47,11 +29,22 @@ post '/resolve' do
 	unless @nameserver.empty?
 	  res.nameserver = @nameserver
 	end
+  
+    # is this an ip-address or a hostname?
+	if /^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?$/.match(@query)
+	  # query DNS, but do a reverse lookup first
+      @dns = res.query(Resolv.getname(@query), Dnsruby::Types.ANY).to_s
+	else
+	  @dns = res.query(@query, Dnsruby::Types.ANY).to_s
+	end
 	
-    @result = res.query(@query, Dnsruby::Types.ANY).to_s
+	# query WHOIS
+	@whois = Whois.query(@query).to_s
   rescue
-    @result = nil
-	flash("Error!")
+    @dns = @whois = nil
+    flash("Error while requesting DNS/WHOIS information!")
   end
+  
+  # render
   erb :resolve
 end
