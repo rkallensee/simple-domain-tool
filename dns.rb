@@ -1,6 +1,6 @@
 # dns.rb
 # start with "ruby -rubygems dns.rb"
-# start with >> shotgun hello.rb << to reload after each request, or with >> rackup << via Bundler
+# start with >> shotgun dns.rb << to reload after each request, or with >> rackup << via Bundler
 # or with plain rackup (config.ru) or with foreman start (uses Procfile).
 
 # links:
@@ -18,7 +18,7 @@ get '/' do
   erb :resolve
 end
 
-post '/resolve' do
+get '/resolve' do
   @query = params[:query]
   @nameserver = params[:nameserver]
   
