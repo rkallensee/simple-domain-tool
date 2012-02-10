@@ -1,11 +1,10 @@
 # dns.rb
 # start with "ruby -rubygems dns.rb"
-# start with >> shotgun dns.rb << to reload after each request, or with >> rackup << via Bundler
-# or with plain rackup (config.ru) or with foreman start (uses Procfile).
+# start as Rack app with >> rackup << (uses config.ru)
+# or with >> foreman start << (uses Procfile).
 
 # links:
 # http://www.sinatrarb.com/intro.html
-# http://www.sinatrarb.com/2011/03/03/sinatra-1.2.0.html
 
 require_relative 'environment'
 require_relative './helpers/sinatra'

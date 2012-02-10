@@ -11,9 +11,9 @@ helpers do
     if session[:flash]
       tmp = session[:flash]
       session[:flash] = false
-	  "<div class=\"alert-message error\">
+	  "<div class=\"alert alert-error\">
         <a class=\"close\" href=\"#\">&times;</a>
-        <p><strong>#{tmp}</p>
+        <strong>#{tmp}</strong>
       </div>"
     end
   end
