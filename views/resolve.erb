@@ -23,6 +23,7 @@
   </div>
 </form>
 
+<% unless @dns.nil? and @whois.nil? %>
 <div class="tabbable">
   <ul class="nav nav-pills">
     <li class="active">
@@ -45,3 +46,4 @@
     </div>
   </div>
 </div>
+<% end %>
