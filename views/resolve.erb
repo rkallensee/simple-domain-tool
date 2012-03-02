@@ -30,6 +30,8 @@
       <a href="#dns-results" data-toggle="tab"><i class="icon-cog"></i> DNS results</a>
     </li>
     <li><a href="#whois-results" data-toggle="tab"><i class="icon-cog"></i> WHOIS results</a></li>
+	<li><a href="#geo-results" data-toggle="tab"><i class="icon-cog"></i> GeoIP results</a></li>
+	<li><a href="#as-results" data-toggle="tab"><i class="icon-cog"></i> AS results</a></li>
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="dns-results">
@@ -42,6 +44,20 @@
       <% unless @whois.nil? %>
         <h2>WHOIS results</h2>
         <pre><%= @whois %></pre>
+      <% end %>
+    </div>
+	<div class="tab-pane" id="geo-results">
+      <% unless @geoip.nil? %>
+        <h2>GeoIP results</h2>
+		<div id="geoip-map" data-lat="<%= h @geoip.latitude %>" data-lon="<%= h @geoip.longitude %>"
+			data-description="<%= h @geoip.city_name + ", " + @geoip.country_name %>"></div>
+        <pre><%= h @geoip.inspect %></pre>
+      <% end %>
+    </div>
+	<div class="tab-pane" id="as-results">
+      <% unless @asnum.nil? %>
+        <h2>AS results</h2>
+        <pre><%= h @asnum.inspect %></pre>
       <% end %>
     </div>
   </div>

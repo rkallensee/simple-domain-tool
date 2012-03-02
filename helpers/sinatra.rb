@@ -4,16 +4,24 @@ helpers do
   alias_method :h, :escape_html
   
   def flash(msg)
-    session[:flash] = msg
+    if session[:flash].nil?
+	  session[:flash] = Array.new
+	end
+	
+	session[:flash] << msg
   end
 
   def show_flash
-    if session[:flash]
-      tmp = session[:flash]
-      session[:flash] = false
+    unless session[:flash].nil?
+      flashes = "<ul>"
+	  session[:flash].each do |flash|
+	    flashes << "<li><strong>#{flash}</strong></li>"
+	  end
+	  flashes << "</ul>"
+      session[:flash] = nil
 	  "<div class=\"alert alert-error\">
         <a class=\"close\" href=\"#\">&times;</a>
-        <strong>#{tmp}</strong>
+        #{flashes}
       </div>"
     end
   end

@@ -3,6 +3,7 @@ GEM
   specs:
     addressable (2.2.6)
     dnsruby (1.53)
+    geoip (1.1.2)
     heroku (2.18.0)
       launchy (>= 0.3.2)
       rest-client (~> 1.6.1)
@@ -30,6 +31,7 @@ PLATFORMS
 
 DEPENDENCIES
   dnsruby
+  geoip
   heroku
   sinatra
   whois

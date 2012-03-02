@@ -6,6 +6,7 @@ require 'erb'
 require 'dnsruby'
 require 'whois'
 require 'resolv'
+require 'geoip'
 
 # monkey-patch dnsruby which is broken on Heroku:
 module Dnsruby

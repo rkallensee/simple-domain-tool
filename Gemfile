@@ -3,6 +3,7 @@ source :rubygems
 gem "sinatra", :require => false
 gem "dnsruby"
 gem "whois"
+gem "geoip"
 gem "heroku"
 
 # pre-release version for windows
