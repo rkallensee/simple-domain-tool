@@ -1,3 +1,5 @@
+var DNSTOOL = {};
+
 $(document).ready(function() {
 	$('form.resolve-form .form-actions button.btn-primary').click(function() {
 		$('form.resolve-form .form-actions .progress .bar').css(
@@ -8,7 +10,7 @@ $(document).ready(function() {
 	if( $('#geoip-map').size() > 0 ) {
         // add leaflet map
 		
-        var map = new L.Map('geoip-map');
+        DNSTOOL.map = new L.Map('geoip-map');
 		var mapnik_osm = new L.TileLayer(
 			"http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", 
 			{
@@ -19,14 +21,20 @@ $(document).ready(function() {
 			}
 		);
 		
-		map.addLayer(mapnik_osm);
+		DNSTOOL.map.addLayer(mapnik_osm);
 		
 		if( $('#geoip-map').data('lat') != '' && $('#geoip-map').data('lon') != '' ) {
-			map.setView(new L.LatLng($('#geoip-map').data('lat'), $('#geoip-map').data('lon')), 9);
+			DNSTOOL.map.setView(new L.LatLng($('#geoip-map').data('lat'), $('#geoip-map').data('lon')), 9);
 			var markerLocation = new L.LatLng($('#geoip-map').data('lat'), $('#geoip-map').data('lon'));
 			var marker = new L.Marker(markerLocation);
-			map.addLayer(marker);
+			DNSTOOL.map.addLayer(marker);
 			marker.bindPopup($('#geoip-map').data('description')); // .openPopup();
 		}
+		
+		$('body').on('shown', 'a[data-toggle="tab"].map', function(e) {
+			// avoid errors b/c map was initialized while being hidden, so recalculate
+			// dimensions when tab is shown
+			DNSTOOL.map.invalidateSize();
+		});
 	}
 });
