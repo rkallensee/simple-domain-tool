@@ -14,12 +14,14 @@ set :public_folder, File.dirname(__FILE__) + '/static'
 get '/' do
   @query = @dns = @whois = @geoip = @asnum = nil
   @nameserver = "8.8.8.8" # Google
+  @path_info = request.path_info
   erb :resolve
 end
 
 get '/resolve' do
   @query = params[:query]
   @nameserver = params[:nameserver]
+  @path_info = request.path_info
   
   res = Dnsruby::Resolver.new
 
@@ -79,4 +81,16 @@ get '/resolve' do
   
   # render
   erb :resolve
+end
+
+get '/help' do
+  # static content
+  @path_info = request.path_info
+  erb :help
+end
+
+get '/about' do
+  # static content
+  @path_info = request.path_info
+  erb :about
 end

@@ -20,17 +20,17 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </a>
-		<a class="brand" href="./">domain-utility</a>
+		<a class="brand" href="./">dns-tool</a>
 		<div class="nav-collapse">
           <ul class="nav">
-            <li class="active">
-              <a href="./">Resolver</a>
+            <li<% if ['/', '/resolve'].include?(@path_info) %> class="active"<% end %>>
+              <a href="/">Resolver</a>
             </li>
-			<li class="">
-              <a href="./">Help</a>
+			<li<% if ['/help'].include?(@path_info) %> class="active"<% end %>>
+              <a href="/help">Help</a>
             </li>
-			<li class="">
-              <a href="./">About</a>
+			<li<% if ['/about'].include?(@path_info) %> class="active"<% end %>>
+              <a href="/about">About</a>
             </li>
           </ul>
         </div>
