@@ -86,9 +86,9 @@ get '/resolve' do
   begin
 	# query DNSBLs
 	@dnsbl = Dnsbl.check(@ip)
-  #rescue
-   # @dnsbl = nil
-    #flash("Error while requesting DNSBL information!")
+  rescue
+    @dnsbl = nil
+    flash("Error while requesting DNSBL information!")
   end
   
   # render

@@ -29,7 +29,7 @@ class Dnsbl
 		zombie.dnsbl.sorbs.net
 	]
 
-	raise ArgumentError, "Invalid IP specified" if !ip.match(/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/)
+	raise ArgumentError, "Invalid IP specified" if ip.is_a? String and !ip.match(/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/)
 
 	check = ip.split('.').reverse.join('.')
 
