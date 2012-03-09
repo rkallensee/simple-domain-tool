@@ -1,5 +1,6 @@
 # dns.rb
-# start with "ruby -rubygems dns.rb"
+# start with >> ruby -rubygems dns.rb <<
+# start with bundler via >> bundle exec rackup <<
 # start as Rack app with >> rackup << (uses config.ru)
 # or with >> foreman start << (uses Procfile).
 
@@ -37,15 +38,18 @@ get '/resolve' do
     # is this an ip-address or a hostname?
 	if /^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?$/.match(@query)
 	  # query DNS, but do a reverse lookup first
-      @dns = res.query(Resolv.getname(@query), Dnsruby::Types.ANY).to_s
+	  @query = Resolv.getname(@query)
+      @dns = res.query(@query, Dnsruby::Types.ANY).to_s
 	else
 	  @dns = res.query(@query, Dnsruby::Types.ANY).to_s
 	end
+	@ip = res.query(@query, Dnsruby::Types.A).answer.first.address.to_s
+	@rdns = Resolv.getname(@ip)
   rescue Dnsruby::NXDomain
-    @dns = nil
+    @dns = @ip = @rdns = nil
 	flash("Error while requesting DNS information: this domain does not exist!")
   rescue
-    @dns = nil
+    @dns = @ip = @rdns = nil
 	flash("Error while requesting DNS information!")
   end
   
@@ -77,6 +81,14 @@ get '/resolve' do
   rescue
     @asnum = nil
     flash("Error while requesting ASNum information!")
+  end
+  
+  begin
+	# query DNSBLs
+	@dnsbl = Dnsbl.check(@ip)
+  #rescue
+   # @dnsbl = nil
+    #flash("Error while requesting DNSBL information!")
   end
   
   # render

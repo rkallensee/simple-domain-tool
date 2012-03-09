@@ -32,12 +32,18 @@
     <li><a href="#whois-results" data-toggle="tab"><i class="icon-cog"></i> WHOIS results</a></li>
 	<li><a href="#geo-results" data-toggle="tab" class="map"><i class="icon-cog"></i> GeoIP results</a></li>
 	<li><a href="#as-results" data-toggle="tab"><i class="icon-cog"></i> AS results</a></li>
+	<li><a href="#dnsbl-results" data-toggle="tab"><i class="icon-cog"></i> DNSBL results</a></li>
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="dns-results">
       <% unless @dns.nil? %>
         <h2>DNS results</h2>
+		<h3>DNS</h3>
         <pre><%= @dns %></pre>
+		
+		<h3>Reverse DNS</h3>
+		<pre>IP was: <%= @ip.to_s %>
+RDNS: <%= @rdns %></pre>
       <% end %>
     </div>
     <div class="tab-pane" id="whois-results">
@@ -58,6 +64,17 @@
       <% unless @asnum.nil? %>
         <h2>AS results</h2>
         <pre><%= h @asnum.inspect %></pre>
+      <% end %>
+    </div>
+	<div class="tab-pane" id="dnsbl-results">
+      <% unless @dnsbl.nil? %>
+        <h2>DNSBL results</h2>
+		<h3>Listed in <%= @dnsbl.size %> blacklists:</h3>
+        <ul>
+			<% @dnsbl.each do |list| %>
+				<li><%= list %></li>
+			<% end %>
+		</ul>
       <% end %>
     </div>
   </div>
