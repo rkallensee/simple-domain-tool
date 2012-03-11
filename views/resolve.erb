@@ -56,7 +56,7 @@ RDNS: <%= @rdns %></pre>
       <% unless @geoip.nil? %>
         <h2>GeoIP results</h2>
 		<div id="geoip-map" data-lat="<%= h @geoip.latitude %>" data-lon="<%= h @geoip.longitude %>"
-			data-description="<%= h @geoip.city_name + ", " + @geoip.country_name %>"></div>
+			data-description="<%= h @geoip.city_name.encode("UTF-8") %>, <%= h @geoip.country_name %>"></div>
         <pre><%= h @geoip.inspect %></pre>
       <% end %>
     </div>
@@ -67,11 +67,18 @@ RDNS: <%= @rdns %></pre>
       <% end %>
     </div>
 	<div class="tab-pane" id="dnsbl-results">
-      <% unless @dnsbl.nil? %>
-        <h2>DNSBL results</h2>
-		<h3>Listed in <%= @dnsbl.size %> blacklists:</h3>
+      <h2>DNSBL results</h2>
+      <% unless @dnsbl.nil? or @dnsbl[:listed].nil? or @dnsbl[:listed].size == 0 %>
+		<h3>Listed in <%= @dnsbl[:listed].size %> blacklists:</h3>
         <ul>
-			<% @dnsbl.each do |list| %>
+			<% @dnsbl[:listed].each do |list| %>
+				<li><%= list %></li>
+			<% end %>
+		</ul>
+	  <% else %>
+	    <p>The IP <%= @ip %> is not listed in any of the checked DNSBLs:</p>
+	    <ul>
+			<% @dnsbl[:unlisted].each do |list| %>
 				<li><%= list %></li>
 			<% end %>
 		</ul>

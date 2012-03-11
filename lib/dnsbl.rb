@@ -42,20 +42,19 @@ class Dnsbl
 	check = ip.split('.').reverse.join('.')
 
 	listed = []
+	unlisted = []
 
 	lists_min.each do |list|
 		begin
 			host = check+'.'+list
-			#puts host
+			puts host
 			Resolv.getaddress(host)
 			listed << list
-		rescue Exception => e
-			case e
-			when Resolv::ResolvError
-			end
+		rescue Resolv::ResolvError
+			unlisted << list
 		end
 	end
 	
-	listed
+	{:listed => listed, :unlisted => unlisted}
   end
 end
