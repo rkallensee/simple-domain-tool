@@ -8,7 +8,7 @@
   <div class="control-group">
     <label for="nameserver" class="control-label">DNS server <span class="label label-info">optional</span>:</label>
     <div class="controls">
-      <input type="text" id="nameserver" name="nameserver" value="<%= h @nameserver %>">
+      <input type="text" id="nameserver" name="ns" value="<%= h @nameserver %>">
     </div>
   </div>
   
@@ -23,7 +23,7 @@
   </div>
 </form>
 
-<% unless @dns.nil? and @whois.nil? %>
+<% unless @dns.nil? and @whois.nil? and @geoip.nil? and @asnum.nil? and @dnsbl.nil? %>
 <div class="tabbable">
   <ul class="nav nav-pills">
     <li class="active">

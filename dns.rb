@@ -9,6 +9,7 @@
 
 require_relative 'environment'
 require_relative './helpers/sinatra'
+require 'resolv'
 
 set :public_folder, File.dirname(__FILE__) + '/static'
 
@@ -21,7 +22,7 @@ end
 
 get '/resolve' do
   @query = params[:query]
-  @nameserver = params[:nameserver]
+  @nameserver = params[:ns]
   @path_info = request.path_info
   
   res = Dnsruby::Resolver.new
@@ -37,20 +38,36 @@ get '/resolve' do
   begin
     # is this an ip-address or a hostname?
 	if /^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?$/.match(@query)
+	  @ip = @query
+	else
+	  @ip = res.query(@query, Dnsruby::Types.A).answer.first.address.to_s
+	end
+  rescue
+    @ip = nil
+	flash("Error while getting IP / A record!")
+  end
+  
+  begin
+    # is this an ip-address or a hostname?
+	if /^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?$/.match(@query)
 	  # query DNS, but do a reverse lookup first
-	  @query = Resolv.getname(@query)
-      @dns = res.query(@query, Dnsruby::Types.ANY).to_s
+      @dns = res.query(Resolv.getname(@query), Dnsruby::Types.ANY).to_s
 	else
 	  @dns = res.query(@query, Dnsruby::Types.ANY).to_s
 	end
-	@ip = res.query(@query, Dnsruby::Types.A).answer.first.address.to_s
-	@rdns = Resolv.getname(@ip)
   rescue Dnsruby::NXDomain
-    @dns = @ip = @rdns = nil
+    @dns = nil
 	flash("Error while requesting DNS information: this domain does not exist!")
   rescue
-    @dns = @ip = @rdns = nil
+    @dns = nil
 	flash("Error while requesting DNS information!")
+  end
+  
+  begin
+	@rdns = Resolv.getname(@ip)
+  rescue Resolv::ResolvError
+    @rdns = nil
+	flash("Error while requesting Reverse DNS information!")
   end
   
   begin

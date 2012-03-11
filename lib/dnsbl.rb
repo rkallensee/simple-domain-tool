@@ -4,9 +4,9 @@
 class Dnsbl
   def self.check(ip)
 	lists = %w[
+	    b.barracudacentral.org
 		bl.spamcop.net
 		blackholes.mail-abuse.org
-		blacklist.spambag.org
 		block.dnsbl.sorbs.net
 		dialups.mail-abuse.org
 		dnsbl.sorbs.net   
@@ -28,6 +28,14 @@ class Dnsbl
 		xbl.spamhaus.org
 		zombie.dnsbl.sorbs.net
 	]
+	
+	lists_min = %w[
+	    b.barracudacentral.org
+		dnsbl.sorbs.net
+		relays.mail-abuse.org
+		zen.spamhaus.org
+		whois.rfc-ignorant.org
+	]
 
 	raise ArgumentError, "Invalid IP specified" if ip.is_a? String and !ip.match(/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/)
 
@@ -35,10 +43,11 @@ class Dnsbl
 
 	listed = []
 
-	lists.each do |list|
+	lists_min.each do |list|
 		begin
 			host = check+'.'+list
-			Resolv::getaddress(host)
+			#puts host
+			Resolv.getaddress(host)
 			listed << list
 		rescue Exception => e
 			case e
