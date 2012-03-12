@@ -4,9 +4,6 @@
 # start as Rack app with >> rackup << (uses config.ru)
 # or with >> foreman start << (uses Procfile).
 
-# links:
-# http://www.sinatrarb.com/intro.html
-
 require_relative 'environment'
 require_relative './helpers/sinatra'
 require 'resolv'
