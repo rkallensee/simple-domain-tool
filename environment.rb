@@ -1,6 +1,8 @@
 require 'bundler'
 Bundler.require
 
+require "sinatra/reloader" if development?
+
 # disable sessions b/c of Rack bug throwing "can't convert nil into String" error
 #enable :sessions
 

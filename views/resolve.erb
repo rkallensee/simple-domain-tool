@@ -33,6 +33,7 @@
 	<li><a href="#geo-results" data-toggle="tab" class="map"><i class="icon-cog"></i> GeoIP results</a></li>
 	<li><a href="#as-results" data-toggle="tab"><i class="icon-cog"></i> AS results</a></li>
 	<li><a href="#dnsbl-results" data-toggle="tab"><i class="icon-cog"></i> DNSBL results</a></li>
+	<li><a href="#service-results" data-toggle="tab"><i class="icon-cog"></i> Running services</a></li>
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="dns-results">
@@ -62,26 +63,46 @@ RDNS: <%= @rdns %></pre>
     </div>
 	<div class="tab-pane" id="as-results">
       <% unless @asnum.nil? %>
-        <h2>AS results</h2>
-        <pre><%= h @asnum.inspect %></pre>
+        <h2>Autonomous System (AS) information</h2>
+		<dl class="dl-horizontal">
+			<dt>Name</dt>
+			<dd><%= h @asnum.asn %></dd>
+			<dt>Number</dt>
+			<dd><%= h @asnum.number %></dd>
+		</dl>
       <% end %>
     </div>
 	<div class="tab-pane" id="dnsbl-results">
       <h2>DNSBL results</h2>
       <% unless @dnsbl.nil? or @dnsbl[:listed].nil? or @dnsbl[:listed].size == 0 %>
-		<h3>Listed in <%= @dnsbl[:listed].size %> blacklists:</h3>
+		<h3>The IP <%= @ip %> is listed in <%= @dnsbl[:listed].size %> DNSBLs:</h3>
         <ul>
 			<% @dnsbl[:listed].each do |list| %>
 				<li><%= list %></li>
 			<% end %>
 		</ul>
-	  <% else %>
+	  <% end %>
+	  <% unless @dnsbl.nil? or @dnsbl[:unlisted].nil? or @dnsbl[:unlisted].size == 0 %>
 	    <p>The IP <%= @ip %> is not listed in any of the checked DNSBLs:</p>
 	    <ul>
 			<% @dnsbl[:unlisted].each do |list| %>
 				<li><%= list %></li>
 			<% end %>
 		</ul>
+      <% end %>
+    </div>
+	<div class="tab-pane" id="service-results">
+      <h2>Running services</h2>
+	  <h3>HTTP</h3>
+      <% if @services.nil? or @services[:http].nil? or @services[:http].size == 0 %>
+		<p>No HTTP connection possible.</p>
+	  <% else %>
+	    <dl class="dl-horizontal">
+	    <% @services[:http].each do |key, value| %>
+		    <dt><%= h key.to_s %></dt>
+			<dd><%= h value %></dd>
+		<% end %>
+		</dl>
       <% end %>
     </div>
   </div>

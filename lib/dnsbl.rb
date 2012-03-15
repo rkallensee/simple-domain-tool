@@ -47,7 +47,7 @@ class Dnsbl
 	lists_min.each do |list|
 		begin
 			host = check+'.'+list
-			puts host
+			#puts host
 			Resolv.getaddress(host)
 			listed << list
 		rescue Resolv::ResolvError

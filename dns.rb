@@ -105,6 +105,15 @@ get '/resolve' do
     flash("Error while requesting DNSBL information!")
   end
   
+  begin
+	# check running services
+	@services = {}
+	@services[:http] = ServiceCheck.check_web(@query)
+  rescue
+    @services = nil
+    flash("Error while checking for running services!")
+  end
+  
   # render
   erb :resolve
 end
