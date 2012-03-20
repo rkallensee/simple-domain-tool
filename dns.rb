@@ -1,3 +1,5 @@
+﻿# encoding: utf-8
+
 # dns.rb
 # start with >> ruby -rubygems dns.rb <<
 # start with bundler via >> bundle exec rackup <<
@@ -6,12 +8,11 @@
 
 require_relative 'environment'
 require_relative './helpers/sinatra'
-require 'resolv'
 
 set :public_folder, File.dirname(__FILE__) + '/static'
 
 get '/' do
-  @query = @dns = @whois = @geoip = @asnum = nil
+  @query = @dns = @whois = @geoip = @asnum = @dnsbl = @services = nil
   @nameserver = "8.8.8.8" # Google
   @path_info = request.path_info
   erb :resolve
@@ -26,32 +27,41 @@ get '/resolve' do
 
   begin
 	unless @nameserver.empty?
-		res.nameserver = @nameserver
+	  res.nameserver = @nameserver
 	end
   rescue
-    flash("Error while setting nameserver!")
+    flash("Error while setting custom nameserver!")
+  end
+  
+  # Is this an IPv4 IP-address or a hostname?
+  if @query =~ /^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?$/
+    @ip = @query
+	begin
+	  @hostname = Resolv.getname(@ip)
+	rescue
+	  @hostname = nil
+	  flash("Given IPv4 address has no RDNS entry.")
+	end
+	@query_was = :ip_address
+  else
+    @hostname = @query
+	
+	if !@hostname.nil? and !@hostname.ascii_only?
+      # we seem to have a non-ASCII hostname (IDN domain), so convert to punycode ACE string
+	  @hostname = SimpleIDN.to_ascii(@hostname)
+    end
+
+	begin
+	  @ip = res.query(@hostname, Dnsruby::Types.A).answer.first.address.to_s
+	rescue
+	  @ip = nil
+	  flash("Cannot resolve A record for given hostname.")
+	end
+	@query_was = :hostname
   end
   
   begin
-    # is this an ip-address or a hostname?
-	if /^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?$/.match(@query)
-	  @ip = @query
-	else
-	  @ip = res.query(@query, Dnsruby::Types.A).answer.first.address.to_s
-	end
-  rescue
-    @ip = nil
-	flash("Error while getting IP / A record!")
-  end
-  
-  begin
-    # is this an ip-address or a hostname?
-	if /^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})?$/.match(@query)
-	  # query DNS, but do a reverse lookup first
-      @dns = res.query(Resolv.getname(@query), Dnsruby::Types.ANY).to_s
-	else
-	  @dns = res.query(@query, Dnsruby::Types.ANY).to_s
-	end
+	@dns = res.query(@hostname, Dnsruby::Types.ANY).to_s
   rescue Dnsruby::NXDomain
     @dns = nil
 	flash("Error while requesting DNS information: this domain does not exist!")
@@ -68,16 +78,22 @@ get '/resolve' do
   end
   
   begin
-	# query WHOIS
-	@whois = Whois.query(@query).to_s
-  rescue
-    @whois = nil
-	flash("Error while requesting WHOIS information!")
+	# query WHOIS for either hostname or IP
+	if @query_was == :hostname
+	  # make sure we have the pure domain for the WHOIS query, no subdomain
+	  dom_parsed = Domainatrix.parse("http://"+@hostname) # bug: Domainatrix don't work without scheme
+	  @whois = Whois.query(dom_parsed.domain_with_public_suffix).to_s.force_encoding("UTF-8")
+	elsif @query_was == :ip_address
+	  @whois = Whois.query(@ip).to_s.force_encoding("UTF-8")
+	end
+  #rescue
+   # @whois = nil
+	#flash("Error while requesting WHOIS information!")
   end
 	
   begin
-	# query GeoIP
-	@geoip = GeoIP.new('res/GeoLiteCity.dat').city(@query)
+	# query GeoIP for either hostname or IP
+	@geoip = GeoIP.new('res/GeoLiteCity.dat').city(@ip)
   rescue SocketError
     @geoip = nil
 	flash("Error while requesting GeoIP city information: the host seems to be unknown!")
@@ -87,8 +103,8 @@ get '/resolve' do
   end
 	
   begin
-	# query GeoIP ASNum
-	@asnum = GeoIP.new('res/GeoIPASNum.dat').asn(@query)
+	# query GeoIP ASNum for either hostname or IP
+	@asnum = GeoIP.new('res/GeoIPASNum.dat').asn(@ip)
   rescue SocketError
     @geoip = nil
 	flash("Error while requesting ASNum information: the host seems to be unknown!")
@@ -98,7 +114,7 @@ get '/resolve' do
   end
   
   begin
-	# query DNSBLs
+	# query DNSBLs for IP address
 	@dnsbl = Dnsbl.check(@ip)
   rescue
     @dnsbl = nil
@@ -108,7 +124,11 @@ get '/resolve' do
   begin
 	# check running services
 	@services = {}
-	@services[:http] = ServiceCheck.check_web(@query)
+	if @query_was == :hostname
+	  @services[:http] = ServiceCheck.check_web(@hostname)
+	elsif @query_was == :ip_address
+	  @services[:http] = ServiceCheck.check_web(@ip)
+	end
   rescue
     @services = nil
     flash("Error while checking for running services!")

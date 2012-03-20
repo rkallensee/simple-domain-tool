@@ -1,4 +1,4 @@
-helpers do
+﻿helpers do
   # this is required to enable html_escape / h method
   include Rack::Utils
   alias_method :h, :escape_html

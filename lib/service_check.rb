@@ -1,4 +1,4 @@
-# Check services running on a certain server.
+﻿# Check services running on a certain server.
 # Much of the code is from http://theadmin.org/articles/check-your-services-with-ruby/
 
 class ServiceCheck

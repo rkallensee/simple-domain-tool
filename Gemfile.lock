@@ -2,44 +2,60 @@ GEM
   remote: http://rubygems.org/
   specs:
     addressable (2.2.7)
+    backports (2.3.0)
     daemons (1.1.8)
     dnsruby (1.53)
-    eventmachine (0.12.10)
+    domainatrix (0.0.10)
+      addressable
+    eventmachine (1.0.0.beta.4.1-x86-mingw32)
     geoip (1.1.2)
-    heroku (2.21.2)
+    heroku (2.21.3)
       launchy (>= 0.3.2)
+      netrc (~> 0.7.1)
       rest-client (~> 1.6.1)
       rubyzip
-      term-ansicolor (~> 1.0.5)
     launchy (2.0.5)
       addressable (~> 2.2.6)
     mime-types (1.17.2)
+    netrc (0.7.1)
     rack (1.4.1)
     rack-protection (1.2.0)
       rack
+    rack-test (0.6.1)
+      rack (>= 1.0)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rubyzip (0.9.6.1)
+    simpleidn (0.0.4)
     sinatra (1.3.2)
       rack (~> 1.3, >= 1.3.6)
       rack-protection (~> 1.2)
       tilt (~> 1.3, >= 1.3.3)
-    term-ansicolor (1.0.7)
-    thin (1.3.1)
+    sinatra-contrib (1.3.1)
+      backports (>= 2.0)
+      eventmachine
+      rack-protection
+      rack-test
+      sinatra (~> 1.3.0)
+      tilt (~> 1.3)
+    thin (1.2.11-x86-mingw32)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
     tilt (1.3.3)
-    whois (2.3.0)
+    whois (2.4.0)
 
 PLATFORMS
   ruby
   x86-mingw32
 
 DEPENDENCIES
-  dnsruby
-  geoip
+  dnsruby (~> 1.53)
+  domainatrix (~> 0.0.10)
+  geoip (~> 1.1.2)
   heroku
-  sinatra
+  simpleidn (~> 0.0.4)
+  sinatra (~> 1.3.2)
+  sinatra-contrib (~> 1.3.1)
   thin
-  whois
+  whois (~> 2.4.0)

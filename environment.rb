@@ -1,22 +1,18 @@
-require 'bundler'
+﻿require 'bundler'
 Bundler.require
 
 require "sinatra/reloader" if development?
+require 'resolv'
 
 # disable sessions b/c of Rack bug throwing "can't convert nil into String" error
 #enable :sessions
 
 configure do
-  SiteConfig = OpenStruct.new(
-    :title => 'Simple domain tool',
-    :author => 'Raphael Kallensee',
-    :url_base => 'http://localhost:9292/'
-  )
-
-  # load from lib dir
+  # load classes from lib dir
   $LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib")
   Dir.glob("#{File.dirname(__FILE__)}/lib/*.rb") { |lib|
     require File.basename(lib, '.*') 
+	also_reload File.basename(lib, '.*') if development?
   }
 end
 

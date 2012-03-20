@@ -1,4 +1,4 @@
-# Check if hostname is listed in DNSBLs.
+﻿# Check if hostname is listed in DNSBLs.
 # Inspired by http://snipplr.com/view/13480/ruby-script-to-check-if-ip-address-is-listed-in-a-dnsbl-rbls/
 
 class Dnsbl
