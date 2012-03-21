@@ -1,14 +1,7 @@
 ﻿# Check services running on a certain server.
-# Much of the code is from http://theadmin.org/articles/check-your-services-with-ruby/
 
 class ServiceCheck
 	
-	def self.check_ping(host)
-	  begin
-	    Net::PingExternal.new(host).ping
-	  end
-	end
-
 	def self.check_mail(host, port=25, ehlo=host)
 	  mailserver = nil
 	  begin
@@ -37,19 +30,37 @@ class ServiceCheck
 		end
 	  end   
       httpresult	  
-	end
+  end
 
-	def self.check_ftp(host, login, password)
-	  begin
-		Net::FTP.open(host) do |ftp|
-		  return "FTP Server down or not responding #{ftp.last_response_code}" unless ftp.last_response_code.match(/220/)
-		  if password.empty?
-			ftp.login(login)
-		  else
-			ftp.login(login, password)
-		  end
-		end
-	  end
-	end
-	
+  def self.check_https(host, file='/')
+    uri = URI.parse("https://"+host+file)
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+    certinfo = cert = nil
+
+    begin
+      http.start do
+        http.get(uri.request_uri)
+        cert = http.peer_cert
+      end
+    rescue Errno::ECONNREFUSED
+    end
+
+    unless cert.nil?
+      # we have an OpenSSL::X509::Certificate object here
+      certinfo = {}
+
+      %w[issuer subject].each do |group|
+        certinfo[group.to_sym] = {}
+
+        cert.send(group).to_a.each do |part|
+          certinfo[group.to_sym][part[0].to_sym] = part[1].to_s
+        end
+      end
+    end
+    certinfo
+  end
+
 end

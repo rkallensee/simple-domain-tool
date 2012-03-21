@@ -2,7 +2,9 @@
 Bundler.require
 
 require "sinatra/reloader" if development?
-require 'resolv'
+require "resolv"
+require "net/http"
+require "net/https"
 
 # disable sessions b/c of Rack bug throwing "can't convert nil into String" error
 #enable :sessions

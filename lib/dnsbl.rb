@@ -4,7 +4,7 @@
 class Dnsbl
   def self.check(ip)
 	lists = %w[
-	    b.barracudacentral.org
+		b.barracudacentral.org
 		bl.spamcop.net
 		blackholes.mail-abuse.org
 		block.dnsbl.sorbs.net
@@ -30,7 +30,7 @@ class Dnsbl
 	]
 	
 	lists_min = %w[
-	    b.barracudacentral.org
+		b.barracudacentral.org
 		dnsbl.sorbs.net
 		relays.mail-abuse.org
 		zen.spamhaus.org

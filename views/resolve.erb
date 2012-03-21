@@ -92,7 +92,7 @@ RDNS: <%= @rdns %></pre>
       <% end %>
     </div>
 	<div class="tab-pane" id="service-results">
-      <h2>Running services</h2>
+      <h2>Running services, host details</h2>
 	  <h3>HTTP</h3>
       <% if @services.nil? or @services[:http].nil? or @services[:http].size == 0 %>
 		<p>No HTTP connection possible.</p>
@@ -103,6 +103,30 @@ RDNS: <%= @rdns %></pre>
 			<dd><%= h value %></dd>
 		<% end %>
 		</dl>
+      <% end %>
+
+      <h3>HTTPS</h3>
+      <% if @ssl.nil? %>
+        <p>No HTTPS connection available.</p>
+      <% else %>
+        <h4>Issuer:</h4>
+        <% unless @ssl[:issuer].nil? %>
+          <dl class="dl-horizontal">
+            <% @ssl[:issuer].each do |key, value| %>
+              <dt><%= h key.to_s %></dt>
+              <dd><%= h value %></dd>
+            <% end %>
+          </dl>
+        <% end %>
+        <h4>Subject:</h4>
+        <% unless @ssl[:subject].nil? %>
+          <dl class="dl-horizontal">
+            <% @ssl[:subject].each do |key, value| %>
+              <dt><%= h key.to_s %></dt>
+              <dd><%= h value %></dd>
+            <% end %>
+          </dl>
+        <% end %>
       <% end %>
     </div>
   </div>
