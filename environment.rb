@@ -13,8 +13,8 @@ configure do
   # load classes from lib dir
   $LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib")
   Dir.glob("#{File.dirname(__FILE__)}/lib/*.rb") { |lib|
-    require File.basename(lib, '.*') 
-	also_reload File.basename(lib, '.*') if development?
+    require File.basename(lib, '.*')
+    also_reload File.basename(lib, '.*') if development?
   }
 end
 
