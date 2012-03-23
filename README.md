@@ -4,7 +4,7 @@ This aims to be a simple, handy, web-based tool to query for e.g. DNS and WHOIS 
 
 ## Installation
 
-### How to run on the application onyour local machine
+### How to run the application on your local machine
 
 You can run the application on your local computer by following these steps:
 
@@ -38,3 +38,11 @@ You can run the application on your local computer by following these steps:
 ### How to run the application on Heroku
 
 _(following soon)_
+
+## Dependency status ![Gemnasium dependency status](https://gemnasium.com/rkallensee/simple-domain-tool.png)
+
+## License
+
+(c) 2012 trio-interactive it services GmbH
+
+_(License following soon)_
