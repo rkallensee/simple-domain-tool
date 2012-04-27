@@ -125,9 +125,9 @@ get '/resolve' do
     @services = {}
     # check running services
     if @query_was == :hostname
-      @services[:http] = ServiceCheck.check_web(@hostname)
+      @services[:http] = ServiceCheck.check_http(@hostname)
     elsif @query_was == :ip_address
-      @services[:http] = ServiceCheck.check_web(@ip)
+      @services[:http] = ServiceCheck.check_http(@ip)
     end
   rescue
     @services = nil
@@ -137,9 +137,9 @@ get '/resolve' do
   begin
     # check ssl
     if @query_was == :hostname
-      @ssl = ServiceCheck.check_https(@hostname)
+      @ssl = ServiceCheck.check_ssl(@hostname)
     elsif @query_was == :ip_address
-      @ssl = ServiceCheck.check_https(@ip)
+      @ssl = ServiceCheck.check_ssl(@ip)
     end
   rescue
     @ssl = nil

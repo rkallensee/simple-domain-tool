@@ -97,7 +97,7 @@ RDNS: <%= @rdns %></pre>
           </ul>
         <% end %>
         <% unless @dnsbl.nil? or @dnsbl[:unlisted].nil? or @dnsbl[:unlisted].size == 0 %>
-          <p>The IP <%= @ip %> is not listed in any of the checked DNSBLs:</p>
+          <p>The IP <%= @ip %> is not listed in the following DNSBLs:</p>
           <ul>
             <% @dnsbl[:unlisted].each do |list| %>
               <li><%= list %></li>

@@ -12,41 +12,47 @@ class ServiceCheck
     mailserver
   end
 
-  def self.check_web(host, file='/')
-    httpresult = {}
-    begin
-      Net::HTTP.start(host) do |http|
-        response = http.get(file)
-        unless response.nil?
-          httpresult[:code] = response.code
-          httpresult[:message] = response.message
+  def self.check_http(host, file='/')
+    uri = URI.parse("http://"+host+file)
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.open_timeout = 5 # seconds
+    http.read_timeout = 5 # seconds
 
-          response.header.each_header { |key, value|
-            if %w{server via}.include?(key)
-              httpresult[key.to_s] = value
-            end
-          }
+    httpresult = nil
+
+    response = http.request_get(uri.request_uri)
+    unless response.nil?
+      httpresult = {}
+      httpresult[:code] = response.code
+      httpresult[:message] = response.message
+
+      response.header.each_header do |key, value|
+        if %w{server via}.include?(key)
+          httpresult[key.to_s] = value
         end
       end
     end
     httpresult
   end
 
-  def self.check_https(host, file='/')
+  def self.check_ssl(host, file='/')
     uri = URI.parse("https://"+host+file)
     http = Net::HTTP.new(uri.host, uri.port)
+    http.ssl_timeout = 5 # seconds
+    http.open_timeout = 5 # seconds
+    http.read_timeout = 5 # seconds
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-    certinfo = cert = nil
+    cert = nil
 
     begin
-      http.start do
-        http.get(uri.request_uri)
-        cert = http.peer_cert
-      end
+      response = http.request_get(uri.request_uri)
+      cert = response.peer_cert
     rescue Errno::ECONNREFUSED
     end
+
+    certinfo = nil
 
     unless cert.nil?
       # we have an OpenSSL::X509::Certificate object here
