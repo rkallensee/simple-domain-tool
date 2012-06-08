@@ -81,7 +81,7 @@ get '/resolve' do
     # query WHOIS for either hostname or IP
     if @query_was == :hostname
       # make sure we have the pure domain for the WHOIS query, no subdomain
-      dom_parsed = Domainatrix.parse("http://"+@hostname) # bug: Domainatrix don't work without scheme
+      dom_parsed = Domainatrix.parse("http://"+@hostname) # bug: Domainatrix doesn't work without scheme
       @whois = Whois.query(dom_parsed.domain_with_public_suffix).to_s.force_encoding("UTF-8")
     elsif @query_was == :ip_address
       @whois = Whois.query(@ip).to_s.force_encoding("UTF-8")
@@ -143,7 +143,7 @@ get '/resolve' do
     end
   rescue
     @ssl = nil
-    flash("Error while checking for SSL certificate!")
+    #flash("Error while checking for SSL certificate!")
   end
 
   # render

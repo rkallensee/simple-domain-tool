@@ -47,8 +47,9 @@ class ServiceCheck
     cert = nil
 
     begin
-      response = http.request_get(uri.request_uri)
-      cert = response.peer_cert
+      response = http.request_get(uri.request_uri) do |response|
+        cert = http.peer_cert
+      end
     rescue Errno::ECONNREFUSED
     end
 
