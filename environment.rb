@@ -6,6 +6,10 @@ require "resolv"
 require "net/http"
 require "net/https"
 
+configure :production do
+  require 'newrelic_rpm'
+end
+
 # disable sessions b/c of Rack bug throwing "can't convert nil into String" error
 #enable :sessions
 
