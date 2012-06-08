@@ -1,5 +1,8 @@
 source :rubygems
 
+# pick Ruby version for Heroku (needs Bundler ~> 1.2.0.pre.1)
+ruby '1.9.3'
+
 gem "sinatra", "~> 1.3.2"
 gem "sinatra-contrib", "~> 1.3.1"
 
@@ -9,5 +12,10 @@ gem "geoip", "~> 1.1.2"
 gem "domainatrix", "~> 0.0.10"
 gem "simpleidn", "~> 0.0.4"
 
-gem "heroku"
-gem "thin"
+group :heroku do
+  gem "heroku"
+end
+
+group :production do
+  gem "thin"
+end
