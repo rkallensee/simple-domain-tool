@@ -26,6 +26,7 @@ GEM
     mime-types (1.17.2)
     multi_json (1.3.6)
     netrc (0.7.1)
+    newrelic_rpm (3.3.5)
     rack (1.4.1)
     rack-protection (1.2.0)
       rack
@@ -72,9 +73,11 @@ PLATFORMS
 DEPENDENCIES
   dnsruby (~> 1.53)
   domainatrix (~> 0.0.10)
+  eventmachine (= 1.0.0.beta.4.1)
   factory_girl (~> 3.3.0)
   geoip (~> 1.1.2)
   heroku
+  newrelic_rpm
   rspec (~> 2.10.0)
   simpleidn (~> 0.0.4)
   sinatra (~> 1.3.2)

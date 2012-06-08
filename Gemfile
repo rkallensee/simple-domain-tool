@@ -17,7 +17,9 @@ group :heroku do
 end
 
 group :production do
+  gem "eventmachine", "1.0.0.beta.4.1", :platforms => :mingw_19
   gem "thin"
+  gem "newrelic_rpm"
 end
 
 group :test do
