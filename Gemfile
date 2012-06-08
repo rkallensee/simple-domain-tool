@@ -19,3 +19,9 @@ end
 group :production do
   gem "thin"
 end
+
+group :test do
+  #gem "capybara", "~> 1.1.2"
+  gem "factory_girl", "~> 3.3.0"
+  gem "rspec", "~> 2.10.0"
+end

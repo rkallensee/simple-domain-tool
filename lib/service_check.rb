@@ -28,7 +28,7 @@ class ServiceCheck
 
       response.header.each_header do |key, value|
         if %w{server via}.include?(key)
-          httpresult[key.to_s] = value
+          httpresult[key.to_sym] = value
         end
       end
     end
