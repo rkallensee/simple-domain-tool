@@ -1,6 +1,6 @@
 source :rubygems
 
-# pick Ruby version for Heroku (needs Bundler ~> 1.2.0.pre.1)
+# pick Ruby version for Heroku (needs Bundler >= 1.2.0.pre.1)
 ruby '1.9.3'
 
 gem "sinatra", "~> 1.3.2"

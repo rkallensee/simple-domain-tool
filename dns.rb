@@ -86,9 +86,9 @@ get '/resolve' do
     elsif @query_was == :ip_address
       @whois = Whois.query(@ip).to_s.force_encoding("UTF-8")
     end
-    #rescue
-    # @whois = nil
-    #flash("Error while requesting WHOIS information!")
+  rescue
+    @whois = nil
+    flash("Error while requesting WHOIS information!")
   end
 
   begin
