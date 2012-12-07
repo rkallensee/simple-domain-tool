@@ -1,36 +1,36 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    activesupport (3.2.8)
+    activesupport (3.2.9)
       i18n (~> 0.6)
       multi_json (~> 1.0)
     addressable (2.3.2)
-    backports (2.6.4)
+    backports (2.6.5)
     daemons (1.1.9)
     diff-lcs (1.1.3)
     dnsruby (1.53)
     domainatrix (0.0.11)
       addressable
     eventmachine (1.0.0.beta.4.1-x86-mingw32)
-    excon (0.16.4)
+    excon (0.16.10)
     factory_girl (3.3.0)
       activesupport (>= 3.0.0)
-    geoip (1.1.2)
-    heroku (2.32.11)
-      heroku-api (~> 0.3.5)
+    geoip (1.2.0)
+    heroku (2.33.3)
+      heroku-api (~> 0.3.7)
       launchy (>= 0.3.2)
       netrc (~> 0.7.7)
       rest-client (~> 1.6.1)
       rubyzip
-    heroku-api (0.3.5)
-      excon (~> 0.16.1)
+    heroku-api (0.3.7)
+      excon (~> 0.16.10)
     i18n (0.6.1)
     launchy (2.1.2)
       addressable (~> 2.3)
     mime-types (1.19)
-    multi_json (1.3.6)
+    multi_json (1.4.0)
     netrc (0.7.7)
-    newrelic_rpm (3.5.0)
+    newrelic_rpm (3.5.3.25)
     rack (1.4.1)
     rack-protection (1.2.0)
       rack
@@ -52,7 +52,7 @@ GEM
       rack (~> 1.3, >= 1.3.6)
       rack-protection (~> 1.2)
       tilt (~> 1.3, >= 1.3.3)
-    sinatra-contrib (1.3.1)
+    sinatra-contrib (1.3.2)
       backports (>= 2.0)
       eventmachine
       rack-protection
@@ -64,7 +64,7 @@ GEM
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
     tilt (1.3.3)
-    whois (2.4.0)
+    whois (2.7.0)
 
 PLATFORMS
   ruby
@@ -75,12 +75,12 @@ DEPENDENCIES
   domainatrix (~> 0.0.11)
   eventmachine (= 1.0.0.beta.4.1)
   factory_girl (~> 3.3.0)
-  geoip (~> 1.1.2)
+  geoip (~> 1.2.0)
   heroku
   newrelic_rpm
   rspec (~> 2.10.0)
   simpleidn (~> 0.0.4)
   sinatra (~> 1.3.3)
-  sinatra-contrib (~> 1.3.1)
+  sinatra-contrib (~> 1.3.2)
   thin
-  whois (~> 2.4.0)
+  whois (~> 2.7.0)
