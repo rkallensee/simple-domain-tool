@@ -115,7 +115,7 @@ get '/resolve' do
 
   begin
     # query DNSBLs for IP address
-    @dnsbl = Dnsbl.check(@ip)
+    @dnsbl = nil #Dnsbl.check(@ip)
   rescue
     @dnsbl = nil
     flash("Error while requesting DNSBL information!")

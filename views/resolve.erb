@@ -69,9 +69,9 @@ RDNS: <%= @rdns %></pre>
       <div class="tab-pane" id="geo-results">
         <% unless @geoip.nil? %>
           <h2>GeoIP results</h2>
-
           <div id="geoip-map" data-lat="<%= h @geoip.latitude %>" data-lon="<%= h @geoip.longitude %>"
-               data-description="<%= h @geoip.city_name.encode("UTF-8") %>, <%= h @geoip.country_name %>"></div>
+               data-description="<%= h @geoip.city_name.encode("UTF-8") %>, <%= h @geoip.country_name %>"
+               data-zoom="<%= @geoip.city_name == "" ? 5 : 9; %>"></div>
           <pre><%= h @geoip.inspect %></pre>
         <% end %>
       </div>
