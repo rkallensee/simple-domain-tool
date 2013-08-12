@@ -1,4 +1,4 @@
-﻿# encoding: utf-8
+# encoding: utf-8
 
 # dns.rb
 # start with >> ruby -rubygems dns.rb <<

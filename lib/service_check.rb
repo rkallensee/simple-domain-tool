@@ -1,4 +1,4 @@
-﻿# Check services running on a certain server.
+# Check services running on a certain server.
 
 class ServiceCheck
 
