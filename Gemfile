@@ -17,8 +17,12 @@ group :heroku do
 end
 
 group :production do
-  gem "thin"
+  gem "unicorn"
   gem "newrelic_rpm"
+end
+
+group :development do
+  gem "thin"
 end
 
 group :test do
