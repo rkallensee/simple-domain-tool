@@ -1,6 +1,6 @@
 # Simple domain tool
 
-This aims to be a simple, handy, web-based tool to query for e.g. DNS and WHOIS records. It should make life easier for people who work with many domains and provide them a "swiss army knife" tool. It is written in [Ruby](http://www.ruby-lang.org) and built with [Sinatra](http://www.sinatrarb.com/). It runs great on Ruby 1.9.3 and on Heroku "Celadon Cedar" stack.
+This aims to be a simple, handy, web-based tool to query for e.g. DNS and WHOIS records. It should make life easier for people who work with many domains and provide them a "swiss army knife" tool. It is written in [Ruby](http://www.ruby-lang.org) and built with [Sinatra](http://www.sinatrarb.com/). It runs great on Ruby 1.9.3 or 2.0.0 and on Heroku "Celadon Cedar" stack.
 
 ## Installation
 
@@ -43,6 +43,6 @@ _(following soon)_
 
 ## License
 
-(c) 2012 trio-interactive it services GmbH
+(c) 2012-13 trio-interactive it services GmbH
 
 _(License following soon)_
