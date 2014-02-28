@@ -12,6 +12,9 @@ gem "geoip", "~> 1.3.5"
 gem "domainatrix", "~> 0.0.11"
 gem "simpleidn", "~> 0.0.5"
 
+gem "bootstrap-sass", "~> 3.1.1.0"
+gem "compass", "~> 0.12.2"
+
 group :heroku do
   gem "heroku"
 end

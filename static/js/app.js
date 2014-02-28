@@ -1,8 +1,8 @@
 var DNSTOOL = {};
 
 $(document).ready(function() {
-	$('form.resolve-form .form-actions button.btn-primary').click(function() {
-		$('form.resolve-form .form-actions .progress .bar').css(
+	$('form.resolve-form button.btn-primary').click(function() {
+		$('form.resolve-form .progress .progress-bar').css(
 			{'width': '100%'}
 		);
 	});
@@ -32,7 +32,7 @@ $(document).ready(function() {
 			marker.bindPopup($('#geoip-map').data('description')); // .openPopup();
 		}
 
-		$('body').on('shown', 'a[data-toggle="tab"].map', function(e) {
+		$('a[data-toggle="tab"].map').on('shown.bs.tab', function (e) {
 			// avoid errors b/c map was initialized while being hidden, so recalculate
 			// dimensions when tab is shown
 			DNSTOOL.map.invalidateSize();

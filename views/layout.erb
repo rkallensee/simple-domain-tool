@@ -1,30 +1,36 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Tiny DNS tool</title>
   <%= NewRelic::Agent.browser_timing_header rescue "" %>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" media="screen, projection">
-  <link rel="stylesheet" href="/css/leaflet.css" type="text/css" media="screen, projection">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tiny DNS tool</title>
+
   <link rel="stylesheet" href="/css/app.css" type="text/css" media="screen, projection">
-  <link rel="stylesheet" href="/css/bootstrap-responsive.min.css" type="text/css" media="screen, projection">
-  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,700" type="text/css">
   <link rel="shortcut icon" href="/favicon.ico">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
 </head>
 <body>
-<div class="navbar navbar-fixed-top">
-  <div class="navbar-inner">
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
-      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </a>
-      <a class="brand" href="./">dns-tool</a>
-
-      <div class="nav-collapse">
-        <ul class="nav">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">dns-tool</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
           <li <% if ['/', '/resolve'].include?(@path_info) %> class="active"<% end %>>
             <a href="/">Resolver</a>
           </li>
@@ -35,27 +41,20 @@
             <a href="/about">About</a>
           </li>
         </ul>
-      </div>
-      <div class="nav-collapse">
-        <form action="<%= url('/resolve') %>" class="navbar-search pull-right head-resolve-form">
-          <input type="text" class="search-query span2" name="query" placeholder="Query">
-          <button type="submit" class="btn btn-small"><i class="icon-refresh"></i>Resolve!</button>
-        </form>
-      </div>
+      </div><!--/.nav-collapse -->
     </div>
   </div>
-</div>
-<div class="container">
+
   <%= show_flash %>
   <%= yield %>
-</div>
-<script type="text/javascript" src="/js/jquery-1.7.1.min.js"></script>
-<script type="text/javascript" src="/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-  L_ROOT_URL = '/img/leaflet/';
-</script>
-<script type="text/javascript" src="/js/leaflet.js"></script>
-<script type="text/javascript" src="/js/app.js"></script>
-<%= NewRelic::Agent.browser_timing_footer rescue "" %>
+
+  <script type="text/javascript" src="/js/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="/js/bootstrap/tab.js"></script>
+  <script type="text/javascript">
+    L_ROOT_URL = '/img/leaflet/';
+  </script>
+  <script type="text/javascript" src="/js/leaflet.js"></script>
+  <script type="text/javascript" src="/js/app.js"></script>
+  <%= NewRelic::Agent.browser_timing_footer rescue "" %>
 </body>
 </html>

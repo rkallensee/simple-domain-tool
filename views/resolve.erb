@@ -1,148 +1,203 @@
-<form action="<%= url('/resolve') %>" class="form-horizontal resolve-form" method="GET">
-  <div class="control-group">
-    <label for="query" class="control-label"><strong>Name/IP to resolve</strong>:</label>
+<div class="jumbotron dns-form-jumbotron">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="row">
+          <form action="<%= url('/resolve') %>" method="GET" class="form-horizontal resolve-form" role="form">
+            <div class="form-group">
+              <label for="query" class="col-sm-4 control-label">Name/IP to resolve</label>
+              <div class="col-sm-8">
+                <input type="text" name="query" class="form-control" id="query" placeholder="Hostname or IP address" value="<%= h @query %>">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="nameserver" class="col-sm-4 control-label">DNS server <span class="label label-info">optional</span></label>
+              <div class="col-sm-8">
+                <input type="text" name="ns" class="form-control" id="nameserver" placeholder="Nameserver IP address" value="<%= h @nameserver %>">
+              </div>
+            </div>
 
-    <div class="controls">
-      <input type="text" id="query" name="query" value="<%= h @query %>">
+            <div class="form-group">
+              <div class="col-sm-4 col-md-offset-4">
+                <div class="btn-group">
+                  <button type="submit" class="btn btn-primary">Resolve!</button>
+                  <a href="/" class="btn btn-default">Reset</a>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="progress progress-striped">
+                  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                    <span class="sr-only">0% Complete</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="control-group">
-    <label for="nameserver" class="control-label">DNS server <span class="label label-info">optional</span>:</label>
-
-    <div class="controls">
-      <input type="text" id="nameserver" name="ns" value="<%= h @nameserver %>">
-    </div>
-  </div>
-
-  <div class="form-actions">
-    <div class="btn-group">
-      <button type="submit" class="btn btn-primary"><i class="icon-refresh icon-white"></i>Resolve!</button>
-      <a href="/" class="btn"><i class="icon-remove"></i>Reset</a>
-    </div>
-    <div class="progress progress-info progress-striped active">
-      <div class="bar"></div>
-    </div>
-  </div>
-</form>
+</div>
 
 <% unless @dns.nil? and @whois.nil? and @geoip.nil? and @asnum.nil? and @dnsbl.nil? %>
-  <div class="tabbable">
-    <ul class="nav nav-pills">
-      <li class="active">
-        <a href="#dns-results" data-toggle="tab"><i class="icon-cog"></i> DNS results</a>
-      </li>
-      <li>
-        <a href="#whois-results" data-toggle="tab"><i class="icon-cog"></i> WHOIS results</a>
-      </li>
-      <li>
-        <a href="#geo-results" data-toggle="tab" class="map"><i class="icon-cog"></i> GeoIP results</a>
-      </li>
-      <li>
-        <a href="#as-results" data-toggle="tab"><i class="icon-cog"></i> AS results</a>
-      </li>
-      <li>
-        <a href="#dnsbl-results" data-toggle="tab"><i class="icon-cog"></i> DNSBL results</a>
-      </li>
-      <li>
-        <a href="#service-results" data-toggle="tab"><i class="icon-cog"></i> Running services</a>
-      </li>
-    </ul>
-    <div class="tab-content">
-      <div class="tab-pane active" id="dns-results">
-        <% unless @dns.nil? %>
-          <h2>DNS results</h2>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-2">
+        <ul class="nav nav-pills nav-stacked">
+          <li class="active">
+            <a href="#dns-results" data-toggle="tab"><i class="icon-cog"></i> DNS results</a>
+          </li>
+          <li>
+            <a href="#rdns-results" data-toggle="tab"><i class="icon-cog"></i> Reverse DNS results</a>
+          </li>
+          <li>
+            <a href="#whois-results" data-toggle="tab"><i class="icon-cog"></i> WHOIS results</a>
+          </li>
+          <li>
+            <a href="#geo-results" data-toggle="tab" class="map"><i class="icon-cog"></i> GeoIP results</a>
+          </li>
+          <li>
+            <a href="#as-results" data-toggle="tab"><i class="icon-cog"></i> AS results</a>
+          </li>
+          <li>
+            <a href="#dnsbl-results" data-toggle="tab"><i class="icon-cog"></i> DNSBL results</a>
+          </li>
+          <li>
+            <a href="#service-results" data-toggle="tab"><i class="icon-cog"></i> Running services</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-10">
+        <div class="tab-content">
+          <div class="tab-pane active" id="dns-results">
+            <div class="panel panel-default">
+              <div class="panel-heading">DNS results</div>
+              <div class="panel-body">
+                <% unless @dns.nil? %>
+                  <h3>DNS</h3>
+                  <pre><%= @dns %></pre>
+                <% end %>
+              </div>
+            </div>
+          </div>
 
-          <h3>DNS</h3>
-          <pre><%= @dns %></pre>
-
-          <h3>Reverse DNS</h3>
-		      <pre>IP was: <%= @ip.to_s %>
+          <div class="tab-pane active" id="rdns-results">
+            <div class="panel panel-default">
+              <div class="panel-heading">Reverse DNS results</div>
+              <div class="panel-body">
+                <% unless @rdns.nil? %>
+                  <h3>Reverse DNS</h3>
+                  <pre>IP was: <%= @ip.to_s %>
 RDNS: <%= @rdns %></pre>
-        <% end %>
-      </div>
-      <div class="tab-pane" id="whois-results">
-        <% unless @whois.nil? %>
-          <h2>WHOIS results</h2>
-          <pre><%= @whois %></pre>
-        <% end %>
-      </div>
-      <div class="tab-pane" id="geo-results">
-        <% unless @geoip.nil? %>
-          <h2>GeoIP results</h2>
-          <div id="geoip-map" data-lat="<%= h @geoip.latitude %>" data-lon="<%= h @geoip.longitude %>"
-               data-description="<%= h @geoip.city_name.encode("UTF-8") %>, <%= h @geoip.country_name %>"
-               data-zoom="<%= @geoip.city_name == "" ? 5 : 9; %>"></div>
-          <pre><%= h @geoip.inspect %></pre>
-        <% end %>
-      </div>
-      <div class="tab-pane" id="as-results">
-        <% unless @asnum.nil? %>
-          <h2>Autonomous System (AS) information</h2>
-          <dl class="dl-horizontal">
-            <dt>Name</dt>
-            <dd><%= h @asnum.asn %></dd>
-            <dt>Number</dt>
-            <dd><%= h @asnum.number %></dd>
-          </dl>
-        <% end %>
-      </div>
-      <div class="tab-pane" id="dnsbl-results">
-        <h2>DNSBL results</h2>
-        <% unless @dnsbl.nil? or @dnsbl[:listed].nil? or @dnsbl[:listed].size == 0 %>
-          <h3>The IP <%= @ip %> is listed in <%= @dnsbl[:listed].size %> DNSBLs:</h3>
-          <ul>
-            <% @dnsbl[:listed].each do |list| %>
-              <li><%= list %></li>
-            <% end %>
-          </ul>
-        <% end %>
-        <% unless @dnsbl.nil? or @dnsbl[:unlisted].nil? or @dnsbl[:unlisted].size == 0 %>
-          <p>The IP <%= @ip %> is not listed in the following DNSBLs:</p>
-          <ul>
-            <% @dnsbl[:unlisted].each do |list| %>
-              <li><%= list %></li>
-            <% end %>
-          </ul>
-        <% end %>
-      </div>
-      <div class="tab-pane" id="service-results">
-        <h2>Running services, host details</h2>
+                <% end %>
+              </div>
+            </div>
+          </div>
 
-        <h3>HTTP</h3>
-        <% if @services.nil? or @services[:http].nil? or @services[:http].size == 0 %>
-          <p>No HTTP connection possible.</p>
-        <% else %>
-          <dl class="dl-horizontal">
-            <% @services[:http].each do |key, value| %>
-              <dt><%= h key.to_s %></dt>
-              <dd><%= h value %></dd>
-            <% end %>
-          </dl>
-        <% end %>
+          <div class="tab-pane" id="whois-results">
+            <div class="panel panel-default">
+              <div class="panel-heading">WHOIS results</div>
+              <div class="panel-body">
+                <% unless @whois.nil? %>
+                  <pre><%= @whois %></pre>
+                <% end %>
+                </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="geo-results">
+            <div class="panel panel-default">
+              <div class="panel-heading">GeoIP results</div>
+              <div class="panel-body">
+                <% unless @geoip.nil? %>
+                  <div id="geoip-map" data-lat="<%= h @geoip.latitude %>" data-lon="<%= h @geoip.longitude %>"
+                       data-description="<%= h @geoip.city_name.encode("UTF-8") %>, <%= h @geoip.country_name %>"
+                       data-zoom="<%= @geoip.city_name == "" ? 5 : 9; %>"></div>
+                  <pre><%= h @geoip.inspect %></pre>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="as-results">
+            <div class="panel panel-default">
+              <div class="panel-heading">Autonomous System (AS) information</div>
+              <div class="panel-body">
+                <% unless @asnum.nil? %>
+                  <dl class="dl-horizontal">
+                    <dt>Name</dt>
+                    <dd><%= h @asnum.asn %></dd>
+                    <dt>Number</dt>
+                    <dd><%= h @asnum.number %></dd>
+                  </dl>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="dnsbl-results">
+            <div class="panel panel-default">
+              <div class="panel-heading">DNSBL results</div>
+              <div class="panel-body">
+                <% unless @dnsbl.nil? or @dnsbl[:listed].nil? or @dnsbl[:listed].size == 0 %>
+                  <h3>The IP <%= @ip %> is listed in <%= @dnsbl[:listed].size %> DNSBLs:</h3>
+                  <ul>
+                    <% @dnsbl[:listed].each do |list| %>
+                      <li><%= list %></li>
+                    <% end %>
+                  </ul>
+                <% end %>
+                <% unless @dnsbl.nil? or @dnsbl[:unlisted].nil? or @dnsbl[:unlisted].size == 0 %>
+                  <p>The IP <%= @ip %> is not listed in the following DNSBLs:</p>
+                  <ul>
+                    <% @dnsbl[:unlisted].each do |list| %>
+                      <li><%= list %></li>
+                    <% end %>
+                  </ul>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="service-results">
+            <div class="panel panel-default">
+              <div class="panel-heading">Running services, host details</div>
+              <div class="panel-body">
+                <h3>HTTP</h3>
+                <% if @services.nil? or @services[:http].nil? or @services[:http].size == 0 %>
+                  <p>No HTTP connection possible.</p>
+                <% else %>
+                  <dl class="dl-horizontal">
+                    <% @services[:http].each do |key, value| %>
+                      <dt><%= h key.to_s %></dt>
+                      <dd><%= h value %></dd>
+                    <% end %>
+                  </dl>
+                <% end %>
 
-        <h3>HTTPS</h3>
-        <% if @ssl.nil? %>
-          <p>No HTTPS connection available.</p>
-        <% else %>
-          <h4>Issuer:</h4>
-          <% unless @ssl[:issuer].nil? %>
-            <dl class="dl-horizontal">
-              <% @ssl[:issuer].each do |key, value| %>
-                <dt><%= h key.to_s %></dt>
-                <dd><%= h value %></dd>
-              <% end %>
-            </dl>
-          <% end %>
-          <h4>Subject:</h4>
-          <% unless @ssl[:subject].nil? %>
-            <dl class="dl-horizontal">
-              <% @ssl[:subject].each do |key, value| %>
-                <dt><%= h key.to_s %></dt>
-                <dd><%= h value %></dd>
-              <% end %>
-            </dl>
-          <% end %>
-        <% end %>
+                <h3>HTTPS</h3>
+                <% if @ssl.nil? %>
+                  <p>No HTTPS connection available.</p>
+                <% else %>
+                  <h4>Certificate issuer:</h4>
+                  <% unless @ssl[:issuer].nil? %>
+                    <dl class="dl-horizontal">
+                      <% @ssl[:issuer].each do |key, value| %>
+                        <dt><%= h key.to_s %></dt>
+                        <dd><%= h value %></dd>
+                      <% end %>
+                    </dl>
+                  <% end %>
+                  <h4>Certificate subject:</h4>
+                  <% unless @ssl[:subject].nil? %>
+                    <dl class="dl-horizontal">
+                      <% @ssl[:subject].each do |key, value| %>
+                        <dt><%= h key.to_s %></dt>
+                        <dd><%= h value %></dd>
+                      <% end %>
+                    </dl>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

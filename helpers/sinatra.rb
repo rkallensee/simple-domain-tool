@@ -19,10 +19,10 @@
       end
       flashes << "</ul>"
       session[:flash] = nil
-      "<div class=\"alert alert-error\">
+      "<div class=\"container\"><div class=\"alert alert-warning\">
         <a class=\"close\" href=\"#\">&times;</a>
         #{flashes}
-      </div>"
+      </div></div>"
     end
   end
 end
