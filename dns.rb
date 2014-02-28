@@ -82,9 +82,9 @@ get '/resolve' do
     if @query_was == :hostname
       # make sure we have the pure domain for the WHOIS query, no subdomain
       dom_parsed = Domainatrix.parse("http://"+@hostname) # bug: Domainatrix doesn't work without scheme
-      @whois = Whois.query(dom_parsed.domain_with_public_suffix).to_s.force_encoding("UTF-8")
+      @whois = Whois.lookup(dom_parsed.domain_with_public_suffix).to_s.force_encoding("UTF-8")
     elsif @query_was == :ip_address
-      @whois = Whois.query(@ip).to_s.force_encoding("UTF-8")
+      @whois = Whois.lookup(@ip).to_s.force_encoding("UTF-8")
     end
   rescue
     @whois = nil
