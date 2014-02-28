@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # pick Ruby version for Heroku
-ruby '2.1.1'
+ruby '2.1.0'
 
 gem "sinatra", "~> 1.4.4"
 gem "sinatra-contrib", "~> 1.4.2"
