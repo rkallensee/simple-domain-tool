@@ -1,13 +1,13 @@
 source 'https://rubygems.org'
 
 # pick Ruby version for Heroku
-ruby '2.1.0'
+ruby '2.1.1'
 
 gem "sinatra", "~> 1.4.4"
 gem "sinatra-contrib", "~> 1.4.2"
 
 gem "dnsruby", "~> 1.54"
-gem "whois", "~> 3.4.2"
+gem "whois", "~> 3.4.4"
 gem "geoip", "~> 1.3.5"
 gem "domainatrix", "~> 0.0.11"
 gem "simpleidn", "~> 0.0.5"
@@ -27,6 +27,6 @@ end
 
 group :test do
   #gem "capybara", "~> 1.1.2"
-  gem "factory_girl", "~> 4.3.0"
+  gem "factory_girl", "~> 4.4.0"
   gem "rspec", "~> 2.14.0"
 end
