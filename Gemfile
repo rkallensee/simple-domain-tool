@@ -20,7 +20,7 @@ group :heroku do
 end
 
 group :production do
-  gem 'unicorn'
+  gem 'puma'
   gem 'newrelic_rpm'
   gem 'scout_apm'
 end

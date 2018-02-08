@@ -42,7 +42,6 @@ GEM
       multi_json (~> 1.8)
     i18n (0.9.3)
       concurrent-ruby (~> 1.0)
-    kgio (2.11.2)
     launchy (2.4.3)
       addressable (~> 2.3)
     mime-types (1.25.1)
@@ -55,10 +54,10 @@ GEM
     netrc (0.10.3)
     newrelic_rpm (4.8.0.341)
     public_suffix (3.0.1)
+    puma (3.11.2)
     rack (2.0.4)
     rack-protection (2.0.0)
       rack
-    raindrops (0.19.0)
     rdoc (6.0.1)
     rest-client (1.6.8)
       mime-types (~> 1.16)
@@ -104,9 +103,6 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.5)
-    unicorn (5.4.0)
-      kgio (~> 2.6)
-      raindrops (~> 0.7)
     whois (4.0.5)
 
 PLATFORMS
@@ -121,13 +117,13 @@ DEPENDENCIES
   geoip
   heroku
   newrelic_rpm
+  puma
   rspec
   scout_apm
   simpleidn
   sinatra
   sinatra-contrib
   thin
-  unicorn
   whois
 
 RUBY VERSION

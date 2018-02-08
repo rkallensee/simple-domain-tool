@@ -16,7 +16,7 @@ You can run the application on your local computer by following these steps:
  gem install bundler
  ```
 
- The dependencies are specified in the `Gemfile`. For production, a web server like [Thin](http://code.macournoyer.com/thin/) or [Mongrel](http://mongrel.rubyforge.org/) is recommended, while [WEBrick](http://www.webrick.org/) is enough for local testing.
+ The dependencies are specified in the `Gemfile`.
 
  3. Now that Bundler is available, you can install all dependencies by switching to your application directory and running
 
