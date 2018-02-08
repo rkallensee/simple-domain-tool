@@ -24,7 +24,7 @@ GEM
       addressable
     eventmachine (1.2.5)
     excon (0.60.0)
-    factory_girl (4.4.0)
+    factory_girl (4.9.0)
       activesupport (>= 3.0.0)
     fssm (0.2.10)
     geoip (1.6.3)
@@ -63,14 +63,19 @@ GEM
     rest-client (1.6.8)
       mime-types (~> 1.16)
       rdoc (>= 2.4.2)
-    rspec (2.14.1)
-      rspec-core (~> 2.14.0)
-      rspec-expectations (~> 2.14.0)
-      rspec-mocks (~> 2.14.0)
-    rspec-core (2.14.8)
-    rspec-expectations (2.14.5)
-      diff-lcs (>= 1.1.3, < 2.0)
-    rspec-mocks (2.14.6)
+    rspec (3.7.0)
+      rspec-core (~> 3.7.0)
+      rspec-expectations (~> 3.7.0)
+      rspec-mocks (~> 3.7.0)
+    rspec-core (3.7.1)
+      rspec-support (~> 3.7.0)
+    rspec-expectations (3.7.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.7.0)
+    rspec-mocks (3.7.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.7.0)
+    rspec-support (3.7.1)
     rubyzip (1.1.7)
     sass (3.2.19)
     scout_apm (2.4.7)
@@ -112,11 +117,11 @@ DEPENDENCIES
   compass (~> 0.12.2)
   dnsruby
   domainatrix
-  factory_girl (~> 4.4.0)
+  factory_girl
   geoip
   heroku
   newrelic_rpm
-  rspec (~> 2.14.0)
+  rspec
   scout_apm
   simpleidn
   sinatra

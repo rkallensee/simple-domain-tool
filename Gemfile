@@ -31,6 +31,6 @@ end
 
 group :test do
   #gem 'capybara', '~> 1.1.2'
-  gem 'factory_girl', '~> 4.4.0'
-  gem 'rspec', '~> 2.14.0'
+  gem 'factory_girl'
+  gem 'rspec'
 end
