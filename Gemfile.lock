@@ -73,6 +73,7 @@ GEM
     rspec-mocks (2.14.6)
     rubyzip (1.1.7)
     sass (3.2.19)
+    scout_apm (2.4.7)
     simpleidn (0.1.1)
       unf (~> 0.1.4)
     sinatra (2.0.0)
@@ -116,6 +117,7 @@ DEPENDENCIES
   heroku
   newrelic_rpm
   rspec (~> 2.14.0)
+  scout_apm
   simpleidn
   sinatra
   sinatra-contrib
