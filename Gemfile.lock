@@ -27,7 +27,7 @@ GEM
     factory_girl (4.9.0)
       activesupport (>= 3.0.0)
     fssm (0.2.10)
-    geoip (1.6.3)
+    geoip (1.6.4)
     heroku (3.99.1)
       heroku-api (= 0.4.2)
       launchy (= 2.4.3)
