@@ -13,7 +13,7 @@ gem 'domainatrix'
 gem 'simpleidn'
 
 gem 'bootstrap-sass', '~> 3.1.1.0'
-gem 'compass', '~> 0.12.2'
+gem 'compass', '~> 1.0.3'
 
 group :heroku do
   gem 'heroku'
